@@ -70,6 +70,7 @@ public final class RecordAccumulator {
     private volatile boolean closed;
     private final AtomicInteger flushesInProgress;
     private final AtomicInteger appendsInProgress;
+//    批次上限
     private final int batchSize;
     private final CompressionType compression;
     private final long lingerMs;
@@ -78,6 +79,7 @@ public final class RecordAccumulator {
     private final BufferPool free;
     private final Time time;
     private final ApiVersions apiVersions;
+//    每个partition有一个deque,每次会往最新的batch里面加数据，然后sender线程会会发送deque最老的数据batch
     private final ConcurrentMap<TopicPartition, Deque<ProducerBatch>> batches;
     private final IncompleteBatches incomplete;
     // The following variables are only accessed by the sender thread, so we don't need to protect them.
